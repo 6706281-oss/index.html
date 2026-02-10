@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>แปลงค่าเงิน</title>
+
+<style>
+body{
+font-family:Arial;
+text-align:center;
+background:#eef2f7;
+padding:40px;
+}
+
+.box{
+background:white;
+padding:20px;
+border-radius:12px;
+max-width:320px;
+margin:auto;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+input,select{
+width:90%;
+padding:10px;
+margin:6px;
+font-size:16px;
+}
+
+.result{
+font-size:22px;
+font-weight:bold;
+color:green;
+margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>💱 แปลงค่าเงิน</h2>
+
+<input type="number" id="amount" placeholder="จำนวนเงิน" oninput="convert()">
+
+<select id="from" onchange="convert()">
+<option value="THB">THB</option>
+<option value="USD">USD</option>
+<option value="EUR">EUR</option>
+<option value="JPY">JPY</option>
+</select>
+
+<select id="to" onchange="convert()">
+<option value="USD">USD</option>
+<option value="THB">THB</option>
+<option value="EUR">EUR</option>
+<option value="JPY">JPY</option>
+</select>
+
+<div class="result" id="result">ผลลัพธ์: -</div>
+
+</div>
+
+<script>
+// เรทตัวอย่าง (ปรับได้)
+const rates = {
+THB: 1,
+USD: 0.028,
+EUR: 0.026,
+JPY: 4.1
+};
+
+function convert(){
+let amount = parseFloat(document.getElementById("amount").value);
+let from = document.getElementById("from").value;
+let to = document.getElementById("to").value;
+
+if(isNaN(amount)){
+document.getElementById("result").innerText="ผลลัพธ์: -";
+return;
+}
+
+// แปลงเป็นบาทก่อน แล้วไปสกุลปลายทาง
+let thb = amount / rates[from];
+let result = thb * rates[to];
+
+document.getElementById("result").innerText =
+"ผลลัพธ์: " + result.toLocaleString(undefined,{maximumFractionDigits:2});
+}
+</script>
+
+</body>
+</html>
